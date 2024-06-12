@@ -17,7 +17,7 @@ function App() {
   //   devEnv:"http://localhost:3000",
   //   proEnv:"https://myproject.onrender.com"
   // })
-  const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/\.]+)(\.git)?/;
+  // const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/\.]+)(\.git)?/;
 
 
 
@@ -111,9 +111,9 @@ describe("A simple string comparison", ()=>{
 
 
 
-  function getInput(e){
-    setState({...state, [e.target.name]:e.target.value})
-  }
+  // function getInput(e){
+  //   setState({...state, [e.target.name]:e.target.value})
+  // }
 
   function on_off(e) {
     const updatedList = (state.active.includes(e.target.name))
@@ -123,13 +123,13 @@ describe("A simple string comparison", ()=>{
     setState({ ...state, active:updatedList })
   }
   
-  function parseUrl(e){
-    const url = state[e.target.name]
-    const match = url.match(regex);
-    let username = (match) ? match[1] : '' 
-    let repositoryName = (match) ? match[2] : '' 
-    setState({...state, usr:username, rep: repositoryName})
-  }
+  // function parseUrl(e){
+  //   const url = state[e.target.name]
+  //   const match = url.match(regex);
+  //   let username = (match) ? match[1] : '' 
+  //   let repositoryName = (match) ? match[2] : '' 
+  //   setState({...state, usr:username, rep: repositoryName})
+  // }
 
 
   function purified(lng, mrkp){
@@ -170,51 +170,25 @@ function toClipBoard(e) {
         </>)
   }
 
-      // <div className='flx'>
-      //   <label htmlFor="parseUrl" className='optn text-center badge text-bg-dark fs-6'>Enter the URL to your GitHub repo
-      //     <input type="text" name="parseUrl" onChange={getInput} onKeyUp={parseUrl}  value={state.parseUrl} /> 
-      //   </label>
-      //   <label htmlFor="devEnv" className='optn text-center badge text-bg-dark fs-6'>URL to Development backend
-      //     <input type="text" name="devEnv" onChange={getInput} value={state.devEnv}/> 
-      //   </label>
-      //   <label htmlFor="proEnv" className='optn text-center badge text-bg-dark fs-6'>URL to Production backend 
-      //     <input type="text" name="proEnv" onChange={getInput} value={state.proEnv}/> 
-      //   </label>
-      // </div>
 
   return (
     <>
 
-
-
       <h1 className='text-center'>Quick Start!</h1>
       <p className='text-center'>Your <strong>one-stop-shop</strong> for unit testing frameworks!</p>
 
-      <p>Recommended: Have your own <strong>$HOME/bin/</strong> for user-level top-priority scripts</p>
+      <p className='text-center text-muted'>Recommended: Set-up your own <strong>$HOME/bin/</strong> for user-level top-priority scripts</p>
       <pre><code onClick={toClipBoard} className='text-start btn btn-light' dangerouslySetInnerHTML={{__html:purified('bash', `mkdir ~/bin`)}}></code></pre>
       <pre><code onClick={toClipBoard} className='text-start btn btn-light' dangerouslySetInnerHTML={{__html:purified('bash', `echo "export PATH=$HOME/bin:$PATH" >> ~/.bashrc`)}}></code></pre>
 
       
       {
         sections.map( section => <div key={section.name}> { render_section(section) } </div>)
-        
       }
 
     </>
   )
 
 }
-
-
-
-      // <h1 className='text-center'>Push it to the limit!</h1>
-      // <p className='text-center'> <i className="bi bi-radioactive fs-3"></i> These below can <strong>nuke</strong> some data. Use only if you're in a hurry and there's not much to lose!</p>
-      // <h6 className='text-muted'> <i className="bi bi-file-code-fill fs-2"></i> One-liner with the essentials. Only thing left is to run the <strong>deploy</strong> script!</h6>
-      // <pre><code onClick={toClipBoard} className='text-start btn btn-light' dangerouslySetInnerHTML={{__html:little_boy}}></code></pre>
-
-
-
-      // <h6 className='text-muted'> <i className="bi bi-file-code fs-2"></i> This one also includes the <strong>optional</strong> configuration. Only for those that wanna go <strong>Full Nuclear!</strong></h6>
-      // <pre><code onClick={toClipBoard} className='text-start btn btn-light' dangerouslySetInnerHTML={{__html:tsar_bomba}}></code></pre>
 
 export default App
