@@ -69,10 +69,36 @@ class TestHelloWorld(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()`)},
+        {legend:  '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Run the test!', cmd:purified('bash','python3 test.py')},
         {legend: '<i class="bi bi-folder2-open fs-3 pe-1"></i> Assumed project structure', cmd: `myProject/
 ├── functions.py
 └── test.py
 `}
+
+      ]
+    }, {
+      name: 'javascript',
+      steps: [
+        {legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Install <strong>nvm</strong> to handle <strong>node</strong> and <strong>npm</strong>', cmd:purified('bash', `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`)},
+        {legend:  '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Initialize your project\'s <strong>package.json</strong>', cmd:purified('bash','npm init')},
+        {legend: '... Add scripts and dependencies', cmd:purified('bash', `npm pkg set 'type'='module' && npm pkg set 'scripts.test'='mocha' && npm install --save-dev mocha chai`)},
+        {legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Run the test!', cmd:purified('bash', `npm test`)},
+        {legend: '<i class="bi bi-filetype-js fs-3 pe-1"></i> Function example <strong>src/functions.js</strong>', cmd:purified('javascript', `export function helloWorld(){
+  return "Hello World! xD"}`)},
+        {legend: '<i class="bi bi-filetype-js fs-3 pe-1"></i> Test example <strong>test/test.js</strong>', cmd:purified('javascript', `import assert from 'assert';
+import {helloWorld} from '../src/functions.js';
+
+describe("A simple string comparison", ()=>{
+  it("String matches", ()=>{
+    assert.deepEqual(helloWorld(), "Hello World! xD")
+  }) 
+})`)},
+        {legend: '<i class="bi bi-folder2-open fs-3 pe-1"></i> Assumed project structure', cmd:`myProject/
+├── package.json
+├── src
+│   └── functions.js
+└── test
+    └── test.js`},
 
       ]
     }
