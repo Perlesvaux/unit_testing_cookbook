@@ -21,7 +21,7 @@ function App() {
 
 
 
-  const php =
+  const sections = [
     {
       name: "php",
       steps:[
@@ -45,10 +45,41 @@ class FunctionsTest extends TestCase
         $this->assertEquals("Hello, World!", helloWorld());
     }
 }
-`)}
+`)},
+        {legend: '<i class="bi bi-folder2-open fs-3 pe-1"></i> Assumed project structure', cmd: `myProject/
+├── src
+│   └── functions.php
+└── test
+    └── test.php
+`}
+
+  ]}, {
+      name: "python",
+      steps: [
+        { legend: '<i class="bi bi-filetype-py fs-3 pe-1"></i> Function example <strong>functions.py</strong>', cmd: purified('python', `#!/usr/bin/env python3
+def hello_world():
+    return "Hello world! =D"`)},
+        { legend:  '<i class="bi bi-filetype-py fs-3 pe-1"></i> Test example <strong>test.py</strong> (Standard library already includes <strong>unittest</strong> module)', cmd: purified('python', `#!/usr/bin/env python3
+import unittest
+from functions import hello_world
+
+class TestHelloWorld(unittest.TestCase):
+    def test_string_match(self):
+        self.assertEqual(hello_world(), "Hello world! =D")
+
+if __name__ == '__main__':
+    unittest.main()`)},
+        {legend: '<i class="bi bi-folder2-open fs-3 pe-1"></i> Assumed project structure', cmd: `myProject/
+├── functions.py
+└── test.py
+`}
 
       ]
     }
+
+  ]
+
+
     
   
 
@@ -139,7 +170,8 @@ function toClipBoard(e) {
 
       
       {
-        render_section(php)
+        sections.map( section => <div key={section.name}> { render_section(section) } </div>)
+        
       }
 
     </>
