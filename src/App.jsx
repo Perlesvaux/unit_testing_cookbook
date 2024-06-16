@@ -25,7 +25,7 @@ function App() {
     {
       name: "php",
       steps:[
-        { id:1, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Let\'s install PHP through <a href="https://www.apachefriends.org/es/download.html">XAMPP</a>. If needed, add it to $PATH', cmd: purified('bash', `echo "export PATH=/opt/lampp/bin:$PATH" >> ~/.bashrc`) },
+        { id:1, legend: '<i class="bi bi-terminal fs-3 pe-1"></i> Let\'s install PHP through <a href="https://www.apachefriends.org/es/download.html">XAMPP</a>. If needed, add it to $PATH', cmd: purified('bash', `echo "export PATH=/opt/lampp/bin:$PATH" >> ~/.bashrc`) },
         { id:2, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> (Option 1) Install <a href="https://getcomposer.org/download/">Composer</a> and require <strong>PHPUnit</strong> as a development dependency:', cmd: purified('bash', `composer require --dev phpunit/phpunit`) },
         { id:3, legend: ' ... Run the test! Run PHPUnit from the project\'s directory', cmd:'./vendor/bin/phpunit test/test.php'},
         { id:4, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> (Option 2) Download the <strong>PHPUnit</strong> PHAR file and move it to your user-level scripts directory:', cmd:purified('bash', 'wget https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar && sudo mv phpunit.phar ~/bin/phpunit')},
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     }, {
       name: 'javascript',
       steps: [
-        {id:1, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Install <strong>nvm</strong> to handle <strong>node</strong> and <strong>npm</strong>', cmd:purified('bash', `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`)},
+        {id:1, legend: '<i class="bi bi-terminal fs-3 pe-1"></i> Install <strong>nvm</strong> to handle <strong>node</strong> and <strong>npm</strong>', cmd:purified('bash', `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`)},
         {id:2, legend:  '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Initialize your project\'s <strong>package.json</strong>', cmd:purified('bash','npm init')},
         {id:3, legend: '... Add scripts and dependencies', cmd:purified('bash', `npm pkg set 'type'='module' && npm pkg set 'scripts.test'='mocha' && npm install --save-dev mocha chai`)},
         {id:4, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Run the test!', cmd:purified('bash', `npm test`)},
@@ -104,7 +104,7 @@ describe("A simple string comparison", ()=>{
     },{
       name: ".NET",
       steps: [
-        {id:1, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Install the .NET Software Development Kit & Entity Framework Core tools:' , cmd: purified('bash', `sudo apt install dotnet-host-7.0`)},
+        {id:1, legend: '<i class="bi bi-terminal fs-3 pe-1"></i> Install the .NET Software Development Kit & Entity Framework Core tools:' , cmd: purified('bash', `sudo apt install dotnet-host-7.0`)},
         {id:2, legend: '', cmd: purified('bash', `sudo apt install dotnet-sdk-7.0`)},
         {id:3, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Create a new solution', cmd: purified('bash', `dotnet new sln -o myProject`)},
         {id:4, legend: '', cmd: purified('bash', `cd myProject`)},
@@ -119,7 +119,7 @@ public class Class1
   public string SayAnything() => "Hello World!";
 }`)},
         {id:11, legend: '<i class="bi bi-filetype-cs fs-3 pe-1"></i> Test example <strong>Fun.Test/UnitTest1.cs</strong>', cmd: purified('csharp', `namespace Fun.Test;
-using Class1;
+using Fun;
 
 public class UnitTest1
 {
@@ -130,8 +130,49 @@ public class UnitTest1
       Assert.True(class1.Equals("Hello World!"), "Both strings should be equal");
 
     }
-}`)}
+}`)},
+        {id: 12, legend: ' Assumed project structure', cmd: purified('bash', `myProject/
+├── myProject.sln
+├── Fun
+│   ├── Fun.csproj
+│   └── Class1.cs
+└── Fun.Test
+    ├── Fun.Test.csproj
+    ├── UnitTest1.cs
+    └── Usings.cs`)}
       ]
+    },
+    {
+      name:"C",
+      steps:[
+        {id:1, legend: '<i class="bi bi-terminal fs-3 pe-1"></i> Install <strong>Criterion</strong>', cmd: purified('bash', `sudo apt install libcriterion-dev`)},
+        {id:2, legend: '<i class="bi bi-terminal-fill fs-3 pe-1"></i> Compile source-code and test. Link them to Criterion library', cmd:purified('bash', `gcc fun.c test.c -o testing -l criterion`)},
+        {id:3, legend: `<i class="bi bi-terminal-fill fs-3 pe-1"></i> Run test!`, cmd:purified('bash', `./testing`)},
+        {id:4, legend: `<i class="bi bi-file-earmark-code fs-3 pe-1"></i> Function example <strong>fun.c</strong>`, cmd:purified('c', `char * greet() {
+    return "Hello World";
+}`)},
+        {id:5, legend: `<i class="bi bi-file-earmark-code fs-3 pe-1"></i> Test example <strong>test.c</strong>`, cmd:purified('c', `#include <criterion/criterion.h>
+#include <string.h>
+
+char * greet();
+
+Test(greet_tests, returns_hello_world){
+  char * result = greet();
+  cr_assert_str_eq(result, "Hello World", "Expected 'Hello World' but got '%s'", result);
+}
+
+Test(greet_tests, returns_eleven){
+  char * result = greet();
+  size_t len = strlen(result);
+  cr_assert_eq(len, 11, "Expected length of 11 but got %zu", len);
+}`)},
+      {id:6, legend:'<i class="bi bi-folder2-open fs-3 pe-1"></i> Assumed project structure', cmd: `myProject/
+├── fun.c
+├── test.c
+└── testing
+`}
+      ]
+
     }
 
   ]
